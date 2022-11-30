@@ -1,39 +1,4 @@
-﻿using System.Data.Common;
-
-interface IReverse{
-    public double[,] doReverse(double[,] matrix);
-}
-
-class IReverse_impl: IReverse{
-    double[,] IReverse.doReverse(double[,] matrix){
-        var rows = matrix.GetLength(0);
-        var columns = matrix.GetLength(1);
-        var max = double.MinValue;
-        int maxI = 0;
-        int maxJ = 0;
-        var min = double.MaxValue;
-        int minI = 0;
-        int minJ = 0;
-        for (int i = 0; i < rows; i++){
-            for (int j = 0; j < columns; j++){
-                if (matrix[i,j] < min) {
-                    min = matrix[i, j];
-                    minI = i;
-                    minJ = j;
-                }
-                if (matrix[i,j] > max) {
-                    max = matrix[i, j]; 
-                    maxI = i;
-                    maxJ = j;
-                }
-            }
-        }
-        matrix[minI, minJ] = max;
-        matrix[maxI, maxJ] = min;
-        return matrix;
-    }
-}
-
+﻿
 class Matrix{
     private int rows;
     private int columns;
@@ -57,21 +22,38 @@ class Matrix{
         }
         return matrix;
     }
-    public void displayMatrix()
+    public double[,] reverseElements()
     {
-        int rowLength = matrix.GetLength(0);
-        int colLength = matrix.GetLength(1);
-
-        for (int i = 0; i < rowLength; i++)
+        var max = double.MinValue;
+        int maxI = 0;
+        int maxJ = 0;
+        var min = double.MaxValue;
+        int minI = 0;
+        int minJ = 0;
+        for (int i = 0; i < rows; i++)
         {
-            for (int j = 0; j < colLength; j++)
+            for (int j = 0; j < columns; j++)
             {
-                Console.Write(string.Format("{0} ", matrix[i, j]));
+                if (matrix[i, j] < min)
+                {
+                    min = matrix[i, j];
+                    minI = i;
+                    minJ = j;
+                }
+                if (matrix[i, j] > max)
+                {
+                    max = matrix[i, j];
+                    maxI = i;
+                    maxJ = j;
+                }
             }
-            Console.Write(Environment.NewLine + Environment.NewLine);
         }
+        matrix[minI, minJ] = max;
+        matrix[maxI, maxJ] = min;
+        return matrix;
     }
 }
+
 
 class MainClass{
     static void Main(string[] args){
